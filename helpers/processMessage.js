@@ -9,10 +9,9 @@ const dialogflow = require("dialogflow");
 const config = {
   credentials: {
     private_key: process.env.DIALOGFLOW_PRIVATE_KEY,
-    client_email: process.env.DIALOG_FLOW_CLIENT_EMAIL
+    client_email: process.env.DIALOGFLOW_CLIENT_EMAIL
   }
 };
-
 const sessionClient = new dialogflow.SessionsClient(config);
 
 const sessionPath = sessionClient.sessionPath(projectId, sessionId);
@@ -43,7 +42,8 @@ const sendTextMessage = (userId, text) => {
 module.exports = event => {
   const userId = event.sender.id;
   const message = event.message.text;
-
+  console.log(userId);
+  console.log(message);
   const request = {
     session: sessionPath,
     queryInput: {
