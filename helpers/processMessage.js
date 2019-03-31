@@ -157,9 +157,19 @@ module.exports = event => {
               activeUsersAndMode[userId] = MODES.LOCATION_PROMPT;
               return sendTextMessage(userId, result.fulfillmentText);
             case "find":
-              activeUsersAndMode[userId] = MODES.FIND;
-
-              break;
+              if (intent === "reset") {
+                activeUsersAndMode[userId] = MODES.INITIAL;
+              }
+              if (activeEvents === undefined || activeEvents.length === 0) {
+                return sendTextMessage(
+                  userId,
+                  "There are no free food currently available near your location :(."
+                );
+              }
+              activeEvents.forEach(event => {
+                const { locationText, remarks, imageURL } = event;
+                sendEventMessage(userId, locationText, imageURL, remarks);
+              });
             default:
               activeUsersAndMode[userId] = MODES.INITIAL;
               return sendTextMessage(userId, result.fulfillmentText);
@@ -183,7 +193,7 @@ module.exports = event => {
           );
         }
         activeEvents.forEach(event => {
-          const { userId, locationText, remarks, imageURL } = event;
+          const { locationText, remarks, imageURL } = event;
           sendEventMessage(userId, locationText, imageURL, remarks);
         });
       });
