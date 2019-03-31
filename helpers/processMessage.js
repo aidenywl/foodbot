@@ -43,7 +43,7 @@ const sendTextMessage = (userId, text) => {
 };
 
 const generateMessageText = (location, remarks) => {
-  return `Free Food!\n\nLocation:\n\n${location}\n\nOrganiser Remarks:\n${remarks}`;
+  return `Free Food!\n\nLocation:\n${location}\n\nOrganiser Remarks:\n${remarks}`;
 };
 
 const sendEventMessage = (userId, location, url, remarks) => {
